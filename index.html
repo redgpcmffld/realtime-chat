@@ -72,7 +72,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Send</button>
       </form>
-      <div id="chatLogs"></div>
+      <div id="chatLogs" style="overflow-y: auto;height:40vw;"></div>
       <div id="typingLogs"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -127,7 +127,7 @@
                 " <span style ='text-align:right;'>" +
                 date +
                 "</span></div>"
-            );
+            ).stop().animate({ scrollTop: $('#chatLogs')[0].scrollHeight }, 1000);
           });
 
           socket.on("typing", (data) => {
