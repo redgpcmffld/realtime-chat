@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Socket.io Chat Example</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+    <style>
+      /* The Modal (background) */
+      .searchModal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 10; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+      }
+      /* Modal Content/Box */
+      .search-modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 70%; /* Could be more or less, depending on screen size */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="modal" class="searchModal">
+      <div class="search-modal-content">
+        <div class="page-header">
+          <h1>닉네임 입력</h1>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-sm-12">
+                <input id="input-id" type="text" />
+                <button id="confirm">confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div
+          style="
+            cursor: pointer;
+            background-color: #dddddd;
+            text-align: center;
+            padding-bottom: 10px;
+            padding-top: 10px;
+          "
+          onClick="closeModal();"
+        >
+          <span class="pop_bt modalCloseBtn" style="font-size: 13pt"> </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h3>Socket.io Chat Example</h3>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="msgForm">Message: </label>
+          <input type="text" class="form-control" id="msgForm" />
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+      <div id="chatLogs"></div>
+      <div id="typingLogs"></div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let userName;
+      jQuery(document).ready(() => {
+        $("#modal").show();
+      });
+      document.getElementById("confirm").addEventListener("click", () => {
+        userName = document.getElementById("input-id").value;
+      });
+      function closeModal() {
+        $(".searchModal").hide();
+        $(function () {
+          const today = new Date();
+          const date = `${today.getFullYear()}/${today.getMonth()}/${today.getHours()}:${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
+          // socket.io 서버에 접속한다
+          var socket = io();
+
+          // 서버로 자신의 정보를 전송한다.
+          socket.emit("login", {
+            // name: "ungmo2",
+            name: userName,
+            userid: "ungmo2@gmail.com",
+          });
+
+          // 서버로부터의 메시지가 수신되면
+          socket.on("login", function (data) {
+            $("#chatLogs").append(
+              "<div><strong>" + data + "</strong> has joined</div>"
+            );
+          });
+
+          // 서버로부터의 메시지가 수신되면
+          socket.on("chat", function (data) {
+            $("#chatLogs").append(
+              "<div>" +
+                data.msg +
+                " : from <strong>" +
+                data.from.name +
+                "</strong></div>"
+            );
+          });
+
+          socket.on("s2c chat", function (data) {
+            $("#chatLogs").append(
+              "<div><strong>" +
+                data.from.name +
+                "</strong>: " +
+                data.msg +
+                " <span style ='text-align:right;'>" +
+                date +
+                "</span></div>"
+            );
+          });
+
+          socket.on("typing", (data) => {
+            $("#typingLogs").html(
+              "<div>" + data.from.name + data.msg + "</div>"
+            );
+          });
+          document
+            .getElementById("msgForm")
+            .addEventListener("compositionupdate", () => {
+              socket.emit("typing", { msg: "가 입력중입니다..." });
+            });
+          // Send 버튼이 클릭되면
+          $("form").submit(function (e) {
+            e.preventDefault();
+            var $msgForm = $("#msgForm");
+
+            // 서버로 메시지를 전송한다.
+            socket.emit("chat", { msg: $msgForm.val() });
+            $msgForm.val("");
+          });
+        });
+      }
+      /*
+
+        function getUserName() {
+            console.log(document.getElementById('input-id').value)
+            const name = document.getElementById('input-id').value;
+            return name;
+        };
+
+        function makeRandomName() {
+          var name = "";
+          var possible = "abcdefghijklmnopqrstuvwxyz";
+          for (var i = 0; i < 3; i++) {
+            name += possible.charAt(
+              Math.floor(Math.random() * possible.length)
+            );
+          }
+          return name;
+        }
+      });*/
+    </script>
+  </body>
+</html>
