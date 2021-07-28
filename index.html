@@ -125,11 +125,12 @@
           socket.on("s2c chat", function (data) {
             $("#chatLogs")
               .append(
-                "<div style='color:" + data.color +
-                ";'><strong>" +
+                "<div style='color:" +
+                  data.color +
+                  ";'><strong>" +
                   data.from.name +
                   "</strong>: " +
-                  data.msg+
+                  data.msg +
                   " <span style ='text-align:right;'>" +
                   date +
                   "</span></div>"
@@ -146,7 +147,7 @@
           document
             .getElementById("msgForm")
             .addEventListener("compositionupdate", () => {
-              socket.emit("typing", { msg: "가 입력중입니다..." });
+              socket.emit("typing", { msg: "이(가) 입력중입니다..." });
             });
           // Send 버튼이 클릭되면
           $("form").submit(function (e) {
