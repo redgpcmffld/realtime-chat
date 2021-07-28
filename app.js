@@ -20,10 +20,11 @@ app.get('/', cors(corsOption), (req,res) => {
 
 io.on('connection', socket => {
     socket.on('login', data => {
-        console.log('Client logged-in:\n name:' + data.name + '\n userid: ' + data.userid);
+        console.log('Client logged-in:\n name:' + data.name + '\n userid: ' + data.userid + '\n color: ' + data.color);
 
         socket.name = data.name;
         socket.userid = data.userid;
+        socket.color = data.color;
 
         io.emit('login', data.name);
     });
@@ -36,6 +37,7 @@ io.on('connection', socket => {
                 name: socket.name,
                 userid: socket.userid
             },
+            color: socket.color,
             msg: data.msg
         };
         io.emit('s2c chat', msg);
