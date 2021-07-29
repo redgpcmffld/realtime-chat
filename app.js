@@ -31,6 +31,13 @@ io.on('connection', socket => {
 
     socket.on('chat', data => {
         console.log('Message from %s: %s', socket.name, data.msg);
+        const curruenttime = new Date();
+        const year = curruenttime.getFullYear();
+        const month = curruenttime.getMonth() + 1;
+        const date = curruenttime.getDate();
+        const hour = curruenttime.getHours();
+        const minute = curruenttime.getMinutes();
+        const second = curruenttime.getSeconds();
 
         const msg = {
             from: {
@@ -38,7 +45,8 @@ io.on('connection', socket => {
                 userid: socket.userid
             },
             color: socket.color,
-            msg: data.msg
+            msg: data.msg,
+            time: `${year}/${month}/${date} ${hour} ${minute} ${second}`
         };
         io.emit('s2c chat', msg);
         // socket.broadcast.emit('chat', msg);
@@ -61,7 +69,8 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', () => {
-        console.log('Socket IO server listening on port 3000');
+        io.emit('logout', socket.name);
+        console.log('Socket IO server listening on port 8000');
     });
 });
 

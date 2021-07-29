@@ -61,7 +61,9 @@
           "
           onClick="closeModal();"
         >
-          <span class="pop_bt modalCloseBtn" style="font-size: 13pt">채팅 시작하기</span>
+          <span class="pop_bt modalCloseBtn" style="font-size: 13pt"
+            >채팅 시작하기</span
+          >
         </div>
       </div>
     </div>
@@ -88,26 +90,32 @@
       document.getElementById("confirm").addEventListener("click", () => {
         userName = document.getElementById("input-id").value;
       });
+      function makeRandomColor() {
+        var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
+        return color;
+      }
       function closeModal() {
         $(".searchModal").hide();
         $(function () {
-          const today = new Date();
-          const date = `${today.getFullYear()}/${today.getMonth()}/${today.getHours()}:${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
           // socket.io 서버에 접속한다
           var socket = io();
 
           // 서버로 자신의 정보를 전송한다.
           socket.emit("login", {
-            // name: "ungmo2",
             name: userName,
             userid: "ungmo2@gmail.com",
             color: makeRandomColor(),
           });
 
-          // 서버로부터의 메시지가 수신되면
+          // 유저가 접속하면 서버에서 메시지를 수신한다.
           socket.on("login", function (data) {
             $("#chatLogs").append(
               "<div><strong>" + data + "</strong> has joined</div>"
+            );
+          });
+          socket.on("logout", (data) => {
+            $("#chatLogs").append(
+              "<div><strong>" + data + "</strong> has disjoined</div>"
             );
           });
 
@@ -125,15 +133,15 @@
           socket.on("s2c chat", function (data) {
             $("#chatLogs")
               .append(
-                "<div style='color:" +
+                "<div style='display: flex; justify-content: space-between; color:" +
                   data.color +
-                  ";'><strong>" +
+                  ";'><div><strong>" +
                   data.from.name +
                   "</strong>: " +
                   data.msg +
-                  " <span style ='text-align:right;'>" +
-                  date +
-                  "</span></div>"
+                  "</div><div>" +
+                  data.time +
+                  "</span></div></div>"
               )
               .stop()
               .animate({ scrollTop: $("#chatLogs")[0].scrollHeight }, 1000);
@@ -159,10 +167,6 @@
             $msgForm.val("");
           });
         });
-      }
-      function makeRandomColor() {
-        var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
-        return color;
       }
     </script>
   </body>
