@@ -30,16 +30,19 @@ io.on("connection", (socket) => {
         "\n color: " +
         data.color
     );
-
+    data.name = sanitizeHtml(data.name, {
+      allowedTags: [],
+      allowedAttributes: {},
+    });
     socket.name = sanitizeHtml(data.name, {
-        allowedTags: [],
-      allowedAttributes: {}
+      allowedTags: [],
+      allowedAttributes: {},
     });
     socket.userid = data.userid;
     socket.color = data.color;
     userList[data.userid] = sanitizeHtml(data.name, {
       allowedTags: [],
-      allowedAttributes: {}
+      allowedAttributes: {},
     });
     socket.userList = userList;
     data.userList = socket.userList;
