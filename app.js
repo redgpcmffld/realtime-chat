@@ -73,12 +73,12 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', () => {
+        delete userList[socket.userid];
         const data = {
             name: socket.name,
             userList: socket.userList
         }
         io.emit('logout', data);
-        delete userList[socket.userid];
         console.log('Socket IO server listening on port 8000');
     });
 });
