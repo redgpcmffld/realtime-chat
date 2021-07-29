@@ -18,8 +18,8 @@ app.get('/', cors(corsOption), (req,res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+const userList = {};
 io.on('connection', socket => {
-    const userList = {};
     socket.on('login', data => {
         console.log('Client logged-in:\n name:' + data.name + '\n userid: ' + data.userid + '\n color: ' + data.color);
 
@@ -29,7 +29,6 @@ io.on('connection', socket => {
         userList[data.userid] = data.name;
         socket.userList = userList;
         data.userList = socket.userList;
-
         io.emit('login', data);
     });
 

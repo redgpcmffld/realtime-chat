@@ -116,6 +116,7 @@
             $("#chatLogs").append(
               "<div><strong>" + data.name + "</strong> has joined</div>"
             );
+            $('#users').html('');
             Object.keys(data.userList).forEach(user => {
                 $('#users').append(
                     `<div>${data.userList[user]}</div>`
@@ -126,6 +127,7 @@
             $("#chatLogs").append(
               "<div><strong>" + data.name + "</strong> has disjoined</div>"
             );
+            $('#users').html('');
             Object.keys(data.userList).forEach(user => {
                 $('#users').append(
                     `<div>${data.userList[user]}</div>`
