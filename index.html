@@ -79,6 +79,7 @@
       </form>
       <div id="chatLogs" style="overflow-y: auto; height: 40vw"></div>
       <div id="typingLogs"></div>
+      <div id="users" style="background-color: bisque;"></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -93,7 +94,10 @@
       function makeRandomColor() {
         var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
         return color;
-      }
+      };
+      function makeRandomID() {
+        return Math.random().toString(36).substr(2, 16);
+      };
       function closeModal() {
         $(".searchModal").hide();
         $(function () {
@@ -103,20 +107,30 @@
           // 서버로 자신의 정보를 전송한다.
           socket.emit("login", {
             name: userName,
-            userid: "ungmo2@gmail.com",
+            userid: makeRandomID(),
             color: makeRandomColor(),
           });
 
           // 유저가 접속하면 서버에서 메시지를 수신한다.
           socket.on("login", function (data) {
             $("#chatLogs").append(
-              "<div><strong>" + data + "</strong> has joined</div>"
+              "<div><strong>" + data.name + "</strong> has joined</div>"
             );
+            Object.keys(data.userList).forEach(user => {
+                $('#users').append(
+                    `<div>${data.userList[user]}</div>`
+                )
+            });
           });
           socket.on("logout", (data) => {
             $("#chatLogs").append(
-              "<div><strong>" + data + "</strong> has disjoined</div>"
+              "<div><strong>" + data.name + "</strong> has disjoined</div>"
             );
+            Object.keys(data.userList).forEach(user => {
+                $('#users').append(
+                    `<div>${data.userList[user]}</div>`
+                )
+            });
           });
 
           // 서버로부터의 메시지가 수신되면

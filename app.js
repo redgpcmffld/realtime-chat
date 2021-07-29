@@ -11,7 +11,7 @@ const io = require('socket.io')(server, {
 
 const corsOption = {
     origin: '*',
-    methods: 'GET,OPTION,PUT,DELETE,POST',
+    methods: 'GET,POST',
 }
 
 app.get('/', cors(corsOption), (req,res) => {
@@ -19,14 +19,18 @@ app.get('/', cors(corsOption), (req,res) => {
 });
 
 io.on('connection', socket => {
+    const userList = {};
     socket.on('login', data => {
         console.log('Client logged-in:\n name:' + data.name + '\n userid: ' + data.userid + '\n color: ' + data.color);
 
         socket.name = data.name;
         socket.userid = data.userid;
         socket.color = data.color;
+        userList[data.userid] = data.name;
+        socket.userList = userList;
+        data.userList = socket.userList;
 
-        io.emit('login', data.name);
+        io.emit('login', data);
     });
 
     socket.on('chat', data => {
@@ -69,7 +73,12 @@ io.on('connection', socket => {
     });
 
     socket.on('disconnect', () => {
-        io.emit('logout', socket.name);
+        const data = {
+            name: socket.name,
+            userList: socket.userList
+        }
+        io.emit('logout', data);
+        delete userList[socket.userid];
         console.log('Socket IO server listening on port 8000');
     });
 });
