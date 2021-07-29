@@ -77,9 +77,21 @@
         </div>
         <button type="submit" class="btn btn-primary">Send</button>
       </form>
-      <div id="chatLogs" style="overflow-y: auto; height: 40vw; width:75%;"></div>
+      <div
+        id="chatLogs"
+        style="overflow-y: auto; height: 40vw; width: 75%"
+      ></div>
       <div id="typingLogs"></div>
-      <div id="users" style="background-color: bisque; position: absolute; /* float: right; */ width: 15%; top: 30%; right: 10%;"></div>
+      <div
+        id="users"
+        style="
+          background-color: bisque;
+          position: absolute; /* float: right; */
+          width: 15%;
+          top: 30%;
+          right: 10%;
+        "
+      ></div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -94,10 +106,10 @@
       function makeRandomColor() {
         var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
         return color;
-      };
+      }
       function makeRandomID() {
         return Math.random().toString(36).substr(2, 16);
-      };
+      }
       function closeModal() {
         $(".searchModal").hide();
         $(function () {
@@ -116,24 +128,20 @@
             $("#chatLogs").append(
               "<div><strong>" + data.name + "</strong> has joined</div>"
             );
-            $('#users').html("<strong>유저목록</strong>");
+            $("#users").html("<strong>유저목록</strong>");
             if (data.userList !== undefined) {
-                Object.keys(data.userList).forEach(user => {
-                    $('#users').append(
-                        `<div>${data.userList[user]}</div>`
-                    )
-                });
-            };
+              Object.keys(data.userList).forEach((user) => {
+                $("#users").append(`<div>${data.userList[user]}</div>`);
+              });
+            }
           });
           socket.on("logout", (data) => {
             $("#chatLogs").append(
               "<div><strong>" + data.name + "</strong> has disjoined</div>"
             );
-            $('#users').html("<strong>유저목록</strong>");
-            Object.keys(data.userList).forEach(user => {
-                $('#users').append(
-                    `<div>${data.userList[user]}</div>`
-                )
+            $("#users").html("<strong>유저목록</strong>");
+            Object.keys(data.userList).forEach((user) => {
+              $("#users").append(`<div>${data.userList[user]}</div>`);
             });
           });
 
