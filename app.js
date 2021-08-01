@@ -78,15 +78,9 @@ io.on("connection", (socket) => {
 
   socket.on("typing", (data) => {
     console.log(socket.name, data.msg);
-
-    const log = {
-      from: {
-        name: socket.name,
-        userid: socket.userid,
-      },
-      msg: data.msg,
-    };
-    io.emit("typing", log);
+    const msg = data.msg === 1 ? `${socket.name} 이(가) 입력중입니다....` : '';
+    console.log(msg);
+    io.emit("typing", msg);
   });
   socket.on("forceDisconnect", () => {
     socket.disconnet();

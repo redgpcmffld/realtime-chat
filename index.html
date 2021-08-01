@@ -173,16 +173,19 @@
               .animate({ scrollTop: $("#chatLogs")[0].scrollHeight }, 1000);
           });
 
-          socket.on("typing", (data) => {
-            $("#typingLogs").html(
-              "<div>" + data.from.name + data.msg + "</div>"
-            );
-          });
           document
             .getElementById("msgForm")
             .addEventListener("compositionupdate", () => {
-              socket.emit("typing", { msg: "이(가) 입력중입니다..." });
+              socket.emit("typing", { msg: 1 });
             });
+          document
+            .getElementById("msgForm")
+            .addEventListener("compositionend", () => {
+              socket.emit("typing", { msg: 0 });
+            });
+          socket.on("typing", (data) => {
+            $("#typingLogs").html("<div>" + data + "</div>");
+          });
           // Send 버튼이 클릭되면
           $("form").submit(function (e) {
             e.preventDefault();
