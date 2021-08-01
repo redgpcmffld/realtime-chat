@@ -2,6 +2,7 @@ const app = require("express")();
 const server = require("http").createServer(app);
 const cors = require("cors");
 const sanitizeHtml = require("sanitize-html");
+const path = require('path');
 
 const io = require("socket.io")(server, {
   cors: {
@@ -16,7 +17,7 @@ const corsOption = {
 };
 
 app.get("/", cors(corsOption), (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(path.join(__dirname,"../public/index.html"));
 });
 
 const userList = {};
