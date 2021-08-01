@@ -77,7 +77,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("typing", (data) => {
-    console.log(socket.name, data.msg);
     const msg = data.msg === 1 ? `${socket.name} 이(가) 입력중입니다....` : '';
     console.log(msg);
     io.emit("typing", msg);
