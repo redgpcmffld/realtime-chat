@@ -2,9 +2,9 @@
   "name": "chat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app",
+    "start": "nodemon api/app",
     "test": "jest"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "nodemon": "^2.0.12",
     "sanitize-html": "^2.4.0",
     "socket.io": "^4.1.3"
   },
