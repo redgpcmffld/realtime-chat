@@ -216,8 +216,8 @@
             .getElementById("msgForm")
             .addEventListener("input", () => {
               socket.emit("typing", { msg: 1 });
-              setTimeout(() => socket.emit('typing', {msg: 0}), 3000); // 3초 이후 리셋
             });
+          setInterval(() => socket.emit('typing', {msg: 0}), 3000);
           // 입력중 표시
           socket.on("typing", (data) => {
             $("#typingLogs").html("<div>" + data + "</div>");
