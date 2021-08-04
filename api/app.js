@@ -1,8 +1,8 @@
-const app = require("express")();
-const server = require("http").createServer(app);
-const cors = require("cors");
+const path = require("path");
 const sanitizeHtml = require("sanitize-html");
-const path = require('path');
+const app = require("express")();
+const cors = require("cors");
+const server = require("http").createServer(app);
 
 const io = require("socket.io")(server, {
   cors: {
@@ -16,16 +16,19 @@ const corsOption = {
   methods: "GET,POST",
 };
 
-app.get("/", cors(corsOption), (req, res) => {
-  res.sendFile(path.join(__dirname,"../public/index.html"));
+app.get("/", cors(corsOption), function (req, res) {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 const userList = {};
-io.on("connection", (socket) => {
+const chat = io.of("/").on("connection", (socket) => {
+  const roomUserList = {};
   socket.on("login", (data) => {
     console.log(
       "Client logged-in:\n name:" +
         data.name +
+        "\n room: " +
+        data.room +
         "\n userid: " +
         data.userid +
         "\n color: " +
@@ -39,27 +42,27 @@ io.on("connection", (socket) => {
       allowedTags: [],
       allowedAttributes: {},
     });
+    socket.room = data.room;
     socket.userid = data.userid;
     socket.color = data.color;
-    userList[data.userid] = sanitizeHtml(data.name, {
-      allowedTags: [],
-      allowedAttributes: {},
+    userList[`${data.userid}_${socket.room}`] = {
+      userName: sanitizeHtml(data.name, {
+        allowedTags: [],
+        allowedAttributes: {},
+      }),
+      roomNumber: data.room,
+    };
+    Object.keys(userList).forEach((user) => {
+      if (user.split('_')[1] == socket.room) {
+        roomUserList[user] = userList[user];
+      }
     });
-    socket.userList = userList;
-    data.userList = socket.userList;
-    io.emit("login", data);
+    socket.userList = data.userList = roomUserList;
+    socket.join(data.room);
+    chat.to(data.room).emit("login", data);
   });
-
   socket.on("chat", (data) => {
-    console.log("Message from %s: %s", socket.name, data.msg);
-    const curruenttime = new Date();
-    const year = curruenttime.getFullYear();
-    const month = curruenttime.getMonth() + 1;
-    const date = curruenttime.getDate();
-    const hour = curruenttime.getHours();
-    const minute = curruenttime.getMinutes();
-    const second = curruenttime.getSeconds();
-
+    console.log("message from client: ", data);
     const msg = {
       from: {
         name: socket.name,
@@ -70,33 +73,30 @@ io.on("connection", (socket) => {
         allowedTags: [],
         allowedAttributes: {},
       }),
-      time: `${year}/${month}/${date} ${hour} ${minute} ${second}`,
     };
+    socket.join(socket.room);
 
-    io.emit("s2c chat", msg);
-    // socket.broadcast.emit('chat', msg);
+    chat.to(socket.room).emit("s2c chat", msg);
   });
-
   socket.on("typing", (data) => {
-    const msg = data.msg === 1 ? `${socket.name} 이(가) 입력중입니다....` : '';
+    const msg = data.msg === 1 ? `${socket.name} 이(가) 입력중입니다....` : "";
     console.log(msg);
-    io.emit("typing", msg);
+    chat.to(socket.room).emit("typing", msg);
   });
   socket.on("forceDisconnect", () => {
     socket.disconnet();
   });
 
   socket.on("disconnect", () => {
-    delete userList[socket.userid];
+    delete userList[`${socket.userid}_${socket.room}`];
     const data = {
       name: socket.name,
-      userList: socket.userList,
+      userList: userList,
     };
-    io.emit("logout", data);
-    console.log("Socket IO server listening on port 8000");
+    chat.to(socket.room).emit("logout", data);
   });
 });
 
-server.listen(8000, () => {
-  console.log("Socket IO listening on port 8000");
+server.listen(8000, function () {
+  console.log("Socket IO server listening on port 8000");
 });
