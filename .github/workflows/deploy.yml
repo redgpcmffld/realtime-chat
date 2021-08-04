@@ -25,10 +25,6 @@ env:
   CONTAINER_NAME: nginx           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
-defaults:
-  run:
-    shell: bash
-
 jobs:
   deploy:
     name: Deploy
