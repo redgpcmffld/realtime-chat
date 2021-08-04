@@ -214,14 +214,9 @@
           // 키입력 감지
           document
             .getElementById("msgForm")
-            .addEventListener("keydown", () => {
+            .addEventListener("input", () => {
               socket.emit("typing", { msg: 1 });
-            });
-          // 키 미입력 감지
-          document
-            .getElementById("msgForm")
-            .addEventListener("keyup", () => {
-              socket.emit("typing", { msg: 0 });
+              setTimeout(() => socket.emit('typing', {msg: 0}), 3000); // 3초 이후 리셋
             });
           // 입력중 표시
           socket.on("typing", (data) => {
