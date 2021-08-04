@@ -1,4 +1,3 @@
-"Dockerfile" 22L, 417C                                                                                        22,0-1       모두
 FROM node:16-alpine3.11
 
 # bash install

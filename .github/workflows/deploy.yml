@@ -20,7 +20,7 @@ env:
   ECR_REPOSITORY: real-time-chat           # set this to your Amazon ECR repository name
   ECS_SERVICE: my-ec2                 # set this to your Amazon ECS service name
   ECS_CLUSTER: default                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: first-run-task-definition # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: task-definition.json # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: nginx           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
