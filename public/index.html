@@ -46,13 +46,13 @@
             <div class="row">
               <div class="col-sm-12">
                 <input id="input-id" type="text" />
-                <button id="id-confirm">ID 등록</button>
+                <button id="id-confirm">ID 등록 //버튼 안 눌러도 됩니다.</button>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-12">
                 <input id="input-room" type="text" />
-                <button id="room-confirm">채팅방 입장</button>
+                <button id="room-confirm">채팅방 입장 //버튼 안 눌러도 됩니다.</button>
               </div>
             </div>
           </div>
@@ -119,14 +119,6 @@
       jQuery(document).ready(() => {
         $("#modal").show();
       });
-      // 닉네임 설정
-      document.getElementById("id-confirm").addEventListener("click", () => {
-        userName = document.getElementById("input-id").value;
-      });
-      // 채팅방 설정
-      document.getElementById("room-confirm").addEventListener("click", () => {
-        userRoom = document.getElementById("input-room").value;
-      });
       // 유저별 랜덤 글씨 색상
       function makeRandomColor() {
         var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
@@ -138,6 +130,8 @@
       }
       // modal이 닫히면
       function closeModal() {
+        userName = document.getElementById("input-id").value;
+        userRoom = document.getElementById("input-room").value;
         $(".searchModal").hide();
         $(function () {
           // socket.io 서버에 접속한다
