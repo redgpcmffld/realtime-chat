@@ -39,14 +39,20 @@
     <div id="modal" class="searchModal">
       <div class="search-modal-content">
         <div class="page-header">
-          <h1>닉네임 입력</h1>
+          <h1>닉네임 입력, 채팅방 선택</h1>
         </div>
         <div class="row">
           <div class="col-sm-12">
             <div class="row">
               <div class="col-sm-12">
                 <input id="input-id" type="text" />
-                <button id="confirm">ID 등록</button>
+                <button id="id-confirm">ID 등록</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <input id="input-room" type="text" />
+                <button id="room-confirm">채팅방 입장</button>
               </div>
             </div>
           </div>
@@ -98,55 +104,68 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       let userName;
+      let userRoom;
+      //초기화면 modal
       jQuery(document).ready(() => {
         $("#modal").show();
       });
-      document.getElementById("confirm").addEventListener("click", () => {
+      // 닉네임 설정
+      document.getElementById("id-confirm").addEventListener("click", () => {
         userName = document.getElementById("input-id").value;
       });
+      // 채팅방 설정
+      document.getElementById("room-confirm").addEventListener("click", () => {
+        userRoom = document.getElementById("input-room").value;
+      });
+      // 유저별 랜덤 글씨 색상
       function makeRandomColor() {
         var color = "#" + Math.round(Math.random() * 0xffffff).toString(16);
         return color;
       }
+      // 유저별 랜덤 고유 아이디
       function makeRandomID() {
         return Math.random().toString(36).substr(2, 16);
       }
+      // modal이 닫히면
       function closeModal() {
         $(".searchModal").hide();
         $(function () {
           // socket.io 서버에 접속한다
-          var socket = io();
+          const socket = io("/", { transports: ["websocket"] });
 
           // 서버로 자신의 정보를 전송한다.
           socket.emit("login", {
+            room: userRoom,
             name: userName,
             userid: makeRandomID(),
             color: makeRandomColor(),
           });
 
           // 유저가 접속하면 서버에서 메시지를 수신한다.
-          socket.on("login", function (data) {
+          socket.on("login", (data) => {
             $("#chatLogs").append(
               "<div><strong>" + data.name + "</strong> has joined</div>"
             );
             $("#users").html("<strong>유저목록</strong>");
             if (data.userList !== undefined) {
               Object.keys(data.userList).forEach((user) => {
-                $("#users").append(`<div>${data.userList[user]}</div>`);
+                $("#users").append(
+                  `<div>${data.userList[user].userName}</div>`
+                );
               });
             }
           });
+          // logout 시 어떤 유저가 나갔는지 표시
           socket.on("logout", (data) => {
             $("#chatLogs").append(
               "<div><strong>" + data.name + "</strong> has disjoined</div>"
             );
             $("#users").html("<strong>유저목록</strong>");
             Object.keys(data.userList).forEach((user) => {
-              $("#users").append(`<div>${data.userList[user]}</div>`);
+              $("#users").append(`<div>${data.userList[user].userName}</div>`);
             });
           });
 
-          // 서버로부터의 메시지가 수신되면
           socket.on("chat", function (data) {
             $("#chatLogs").append(
               "<div>" +
@@ -156,8 +175,15 @@
                 "</strong></div>"
             );
           });
-
+          // 서버로부터 메세지 수신 시 브라우저에 표시
           socket.on("s2c chat", function (data) {
+            const curruenttime = new Date();
+            const year = curruenttime.getFullYear();
+            const month = curruenttime.getMonth() + 1;
+            const date = curruenttime.getDate();
+            const hour = curruenttime.getHours();
+            const minute = curruenttime.getMinutes();
+            const second = curruenttime.getSeconds();
             $("#chatLogs")
               .append(
                 "<div style='display: flex; justify-content: space-between; color:" +
@@ -167,30 +193,32 @@
                   "</strong>: " +
                   data.msg +
                   "</div><div>" +
-                  data.time +
+                  `${year}/${month}/${date} ${hour} ${minute} ${second}` +
                   "</span></div></div>"
               )
               .stop()
               .animate({ scrollTop: $("#chatLogs")[0].scrollHeight }, 1000);
           });
-
+          // 키입력 감지
           document
             .getElementById("msgForm")
-            .addEventListener("compositionupdate", () => {
+            .addEventListener("keydown", () => {
               socket.emit("typing", { msg: 1 });
             });
+          // 키 미입력 감지
           document
             .getElementById("msgForm")
-            .addEventListener("compositionend", () => {
+            .addEventListener("keyup", () => {
               socket.emit("typing", { msg: 0 });
             });
+          // 입력중 표시
           socket.on("typing", (data) => {
             $("#typingLogs").html("<div>" + data + "</div>");
           });
           // Send 버튼이 클릭되면
           $("form").submit(function (e) {
             e.preventDefault();
-            var $msgForm = $("#msgForm");
+            const $msgForm = $("#msgForm");
 
             // 서버로 메시지를 전송한다.
             socket.emit("chat", { msg: $msgForm.val() });
