@@ -37,12 +37,7 @@
       "volumesFrom": null,
       "linuxParameters": null,
       "secrets": null,
-      "dependsOn": [
-        {
-          "containerName": "",
-          "condition": "SUCCESS"
-        }
-      ],
+      "dependsOn": null,
       "startTimeout": 0,
       "stopTimeout": 0,
       "hostname": null,
