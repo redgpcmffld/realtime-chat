@@ -25,18 +25,8 @@
       "essential": true,
       "entryPoint": [""],
       "command": [""],
-      "environment": [
-        {
-          "name": "",
-          "value": ""
-        }
-      ],
-      "environmentFiles": [
-        {
-          "value": "",
-          "type": "s3"
-        }
-      ],
+      "environment": null,
+      "environmentFiles": null,
       "mountPoints": [
         {
           "sourceVolume": "",
@@ -44,42 +34,9 @@
           "readOnly": true
         }
       ],
-      "volumesFrom": [
-        {
-          "sourceContainer": "",
-          "readOnly": true
-        }
-      ],
-      "linuxParameters": {
-        "capabilities": {
-          "add": [""],
-          "drop": [""]
-        },
-        "devices": [
-          {
-            "hostPath": "",
-            "containerPath": "",
-            "permissions": ["write"]
-          }
-        ],
-        "initProcessEnabled": true,
-        "sharedMemorySize": 0,
-        "tmpfs": [
-          {
-            "containerPath": "",
-            "size": 0,
-            "mountOptions": [""]
-          }
-        ],
-        "maxSwap": 0,
-        "swappiness": 0
-      },
-      "secrets": [
-        {
-          "name": "",
-          "valueFrom": ""
-        }
-      ],
+      "volumesFrom": null,
+      "linuxParameters": null,
+      "secrets": null,
       "dependsOn": [
         {
           "containerName": "",
@@ -88,26 +45,19 @@
       ],
       "startTimeout": 0,
       "stopTimeout": 0,
-      "hostname": "",
-      "user": "",
-      "workingDirectory": "",
+      "hostname": null,
+      "user": null,
+      "workingDirectory": null,
       "disableNetworking": true,
       "privileged": true,
       "readonlyRootFilesystem": true,
       "dnsServers": [""],
       "dnsSearchDomains": [""],
-      "extraHosts": [
-        {
-          "hostname": "",
-          "ipAddress": ""
-        }
-      ],
+      "extraHosts": null,
       "dockerSecurityOptions": [""],
       "interactive": true,
       "pseudoTerminal": true,
-      "dockerLabels": {
-        "KeyName": ""
-      },
+      "dockerLabels": null,
       "ulimits": [
         {
           "name": "core",
@@ -124,70 +74,13 @@
           "awslogs-stream-prefix": "ecs"
         }
       },
-      "healthCheck": {
-        "command": [""],
-        "interval": 0,
-        "timeout": 0,
-        "retries": 0,
-        "startPeriod": 0
-      },
-      "systemControls": [
-        {
-          "namespace": "",
-          "value": ""
-        }
-      ],
-      "resourceRequirements": [
-        {
-          "value": "",
-          "type": "GPU"
-        }
-      ],
-      "firelensConfiguration": {
-        "type": "fluentbit",
-        "options": {
-          "KeyName": ""
-        }
-      }
+      "healthCheck": null,
+      "systemControls": null,
+      "resourceRequirements": null,
+      "firelensConfiguration": null
     }
   ],
-  "volumes": [
-    {
-      "name": "",
-      "host": {
-        "sourcePath": ""
-      },
-      "dockerVolumeConfiguration": {
-        "scope": "task",
-        "autoprovision": true,
-        "driver": "",
-        "driverOpts": {
-          "KeyName": ""
-        },
-        "labels": {
-          "KeyName": ""
-        }
-      },
-      "efsVolumeConfiguration": {
-        "fileSystemId": "",
-        "rootDirectory": "",
-        "transitEncryption": "DISABLED",
-        "transitEncryptionPort": 0,
-        "authorizationConfig": {
-          "accessPointId": "",
-          "iam": "DISABLED"
-        }
-      },
-      "fsxWindowsFileServerVolumeConfiguration": {
-        "fileSystemId": "",
-        "rootDirectory": "",
-        "authorizationConfig": {
-          "credentialsParameter": "",
-          "domain": ""
-        }
-      }
-    }
-  ],
+  "volumes": null,
   "placementConstraints": [
     {
       "type": "memberOf",
@@ -245,16 +138,7 @@
   "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:144302571462:task-definition/first-run-task-definition:1",
   "pidMode": "task",
   "ipcMode": "none",
-  "proxyConfiguration": {
-    "type": "APPMESH",
-    "containerName": "",
-    "properties": [
-      {
-        "name": "",
-        "value": ""
-      }
-    ]
-  },
+  "proxyConfiguration": null,
   "inferenceAccelerators": [
     {
       "deviceName": "",
