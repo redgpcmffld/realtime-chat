@@ -11,8 +11,8 @@
       "repositoryCredentials": {
         "credentialsParameter": ""
       },
-      "cpu": 0,
-      "memory": 0,
+      "cpu": 256,
+      "memory": null,
       "memoryReservation": 512,
       "links": [""],
       "portMappings": [
