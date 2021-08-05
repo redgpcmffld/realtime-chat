@@ -76,12 +76,7 @@
     }
   ],
   "volumes": null,
-  "placementConstraints": [
-    {
-      "type": "memberOf",
-      "expression": ""
-    }
-  ],
+  "placementConstraints": [],
   "requiresCompatibilities": ["FARGATE"],
   "requiresAttributes": [
     {
