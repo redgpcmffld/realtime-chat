@@ -75,7 +75,6 @@
       "firelensConfiguration": null
     }
   ],
-  "volumes": [],
   "placementConstraints": [],
   "requiresCompatibilities": ["FARGATE"],
   "requiresAttributes": [
