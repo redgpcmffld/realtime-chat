@@ -17,7 +17,7 @@
         "entryPoint": null,
         "portMappings": [
           {
-            "hostPort": 0,
+            "hostPort": 80,
             "protocol": "tcp",
             "containerPort": 8000
           }
@@ -42,9 +42,9 @@
         "memory": null,
         "memoryReservation": 512,
         "volumesFrom": [],
-        "stopTimeout": 1000,
+        "stopTimeout": 120,
         "image": "nginx:latest",
-        "startTimeout": 2,
+        "startTimeout": 30,
         "firelensConfiguration": null,
         "dependsOn": null,
         "disableNetworking": true,
@@ -64,7 +64,7 @@
       }
     ],
     "placementConstraints": [],
-    "memory": null,
+    "memory": "512",
     "taskRoleArn": "arn:aws:iam::144302571462:role/ecsTaskExecutionRole",
     "compatibilities": [
       "EXTERNAL",
@@ -132,8 +132,8 @@
     "requiresCompatibilities": [
       "EC2"
     ],
-    "networkMode": null,
-    "cpu": null,
+    "networkMode": "bridge",
+    "cpu": "256",
     "revision": 1,
     "status": "ACTIVE",
     "inferenceAccelerators": null,
