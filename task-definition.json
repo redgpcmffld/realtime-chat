@@ -126,10 +126,10 @@
     }
   ],
   "pidMode": null,
-  "requiresCompatibilities": ["FARGATE", "EC2"],
-  "networkMode": "bridge",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
   "cpu": "256",
-  "revision": 1,
+  "revision": 3,
   "status": "ACTIVE",
   "inferenceAccelerators": null,
   "proxyConfiguration": null,
