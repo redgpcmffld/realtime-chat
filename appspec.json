@@ -7,7 +7,7 @@
                 "Properties": {
                     "TaskDefinition": "arn:aws:ecs:ap-northeast-2:144302571462:task-definition/ec2-task-definition:1",
                     "LoadBalancerInfo": {
-                        "ContainerName": "i-08f5602e679a13590",
+                        "ContainerName": "nginx",
                         "ContainerPort": "80:8000"
                     },
                     "PlatformVersion": "LATEST"
