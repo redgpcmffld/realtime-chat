@@ -17,7 +17,7 @@
         "entryPoint": null,
         "portMappings": [
           {
-            "hostPort": 8000,
+            "hostPort": 80,
             "protocol": "tcp",
             "containerPort": 8000
           }
@@ -27,13 +27,7 @@
         "cpu": 256,
         "environment": [],
         "resourceRequirements": null,
-        "ulimits": [
-          {
-            "name": "core",
-            "softLimit": 0,
-            "hardLimit": 0
-          }
-        ],
+        "ulimits": null,
         "dnsServers": null,
         "mountPoints": [],
         "workingDirectory": null,
@@ -42,36 +36,36 @@
         "memory": null,
         "memoryReservation": 512,
         "volumesFrom": [],
-        "stopTimeout": 120,
-        "image": "144302571462.dkr.ecr.ap-northeast-2.amazonaws.com/real-time-chat:16295e04f87b9c5f0f2003d0d4cb52c0a2e8cfcd",
-        "startTimeout": 30,
+        "stopTimeout": null,
+        "image": "144302571462.dkr.ecr.ap-northeast-2.amazonaws.com/real-time-chat:52e99a71f5cc3c2dbd4a7c8d22c8ec7716bbc214",
+        "startTimeout": null,
         "firelensConfiguration": null,
         "dependsOn": null,
-        "disableNetworking": true,
-        "interactive": true,
+        "disableNetworking": null,
+        "interactive": null,
         "healthCheck": null,
         "essential": true,
         "links": null,
         "hostname": null,
         "extraHosts": null,
-        "pseudoTerminal": true,
+        "pseudoTerminal": null,
         "user": null,
-        "readonlyRootFilesystem": true,
+        "readonlyRootFilesystem": null,
         "dockerLabels": null,
         "systemControls": null,
-        "privileged": true,
+        "privileged": null,
         "name": "nginx"
       }
     ],
     "placementConstraints": [],
     "memory": "512",
-    "taskRoleArn": "arn:aws:iam::144302571462:role/ecsTaskExecutionRole",
+    "taskRoleArn": null,
     "compatibilities": [
-      "EXTERNAL",
-      "EC2"
+      "EC2",
+      "FARGATE"
     ],
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:144302571462:task-definition/ec2-task-definition:5",
-    "family": "ec2-task-definition",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:144302571462:task-definition/nginx:1",
+    "family": "nginx",
     "requiresAttributes": [
       {
         "targetId": null,
@@ -101,31 +95,7 @@
         "targetId": null,
         "targetType": null,
         "value": null,
-        "name": "com.amazonaws.ecs.capability.privileged-container"
-      },
-      {
-        "targetId": null,
-        "targetType": null,
-        "value": null,
-        "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
-      },
-      {
-        "targetId": null,
-        "targetType": null,
-        "value": null,
         "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-      },
-      {
-        "targetId": null,
-        "targetType": null,
-        "value": null,
-        "name": "com.amazonaws.ecs.capability.task-iam-role"
-      },
-      {
-        "targetId": null,
-        "targetType": null,
-        "value": null,
-        "name": "ecs.capability.container-ordering"
       },
       {
         "targetId": null,
@@ -138,15 +108,21 @@
         "targetType": null,
         "value": null,
         "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+      },
+      {
+        "targetId": null,
+        "targetType": null,
+        "value": null,
+        "name": "ecs.capability.task-eni"
       }
     ],
     "pidMode": null,
     "requiresCompatibilities": [
-      "EC2"
+      "FARGATE"
     ],
-    "networkMode": "bridge",
+    "networkMode": "awsvpc",
     "cpu": "256",
-    "revision": 5,
+    "revision": 1,
     "status": "ACTIVE",
     "inferenceAccelerators": null,
     "proxyConfiguration": null,
