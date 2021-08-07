@@ -1,0 +1,26 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:ap-northeast-2:144302571462:task-definition/first-run-task-definition:1"
+        LoadBalancerInfo:
+          ContainerName: "nginx"
+          ContainerPort: 80
+# Optional properties
+        PlatformVersion: "LATEST"
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            Subnets: ["subnet-f14ab5ae","subnet-e4cc758f"]
+            SecurityGroups: ["sg-0b9af2f25a3537458"]
+            AssignPublicIp: "ENABLED"
+        CapacityProviderStrategy:
+          - Base: 1
+            CapacityProvider: "FARGATE_SPOT"
+            Weight: 2
+          - Base: 0
+            CapacityProvider: "FARGATE"
+            Weight: 1
+Hooks:
+  - BeforeInstall: ""
+  - AfterInstall: ""

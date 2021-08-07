@@ -65,7 +65,7 @@
       "FARGATE"
     ],
     "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:144302571462:task-definition/first-run-task-definition:1",
-    "family": "nginx",
+    "family": "first-run-task-definition",
     "requiresAttributes": [
       {
         "targetId": null,
