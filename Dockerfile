@@ -17,5 +17,7 @@ RUN npm install
 
 COPY . /app
 
+RUN npm start
+
 # Docker Demon Port Mapping
 EXPOSE 8000
