@@ -17,7 +17,7 @@ const corsOption = {
 };
 
 app.get("/", cors(corsOption), function (req, res) {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  res.sendFile("front/public/index.html");
 });
 
 const userList = {};
