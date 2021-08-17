@@ -1,5 +1,5 @@
 # realtime-chat
-vue, nodejs socket.io로 재구성 중
+vue, nodejs socket.io로 재구성 중 (현재 코드는 한 파일에 집중되어 있기 때문에 실제 서비스와 같이 구성해보기 위함.)
 
 github action을 활용하여 ECR/ECS CI/CD 구현
 ## 참고 사이트
