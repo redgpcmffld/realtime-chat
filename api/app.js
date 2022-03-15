@@ -53,7 +53,7 @@ const chat = io.of("/").on("connection", (socket) => {
       roomNumber: data.room,
     };
     Object.keys(userList).forEach((user) => {
-      if (user.split('_')[1] == socket.room) {
+      if (user.split("_")[1] == socket.room) {
         roomUserList[user] = userList[user];
       }
     });
