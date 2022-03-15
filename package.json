@@ -2,8 +2,16 @@
   "name": "chat",
   "version": "1.0.0",
   "description": "",
+  "workspaces": [
+    "back",
+    "front"
+  ],
   "main": "",
   "scripts": {
+    "serve:api": "cd back && npm run start",
+    "serve:web": "cd front && npm run serve",
+    "build": "cd front && npm run build",
+    "lint": "cd front && npm run lint",
     "test": "jest"
   },
   "keywords": [],
