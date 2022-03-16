@@ -1,7 +1,5 @@
-const path = require("path");
 const sanitizeHtml = require("sanitize-html");
 const app = require("express")();
-const cors = require("cors");
 const server = require("http").createServer(app);
 
 const io = require("socket.io")(server, {
@@ -11,17 +9,9 @@ const io = require("socket.io")(server, {
   },
 });
 
-const corsOption = {
-  origin: "*",
-  methods: "GET,POST",
-};
-
-app.get("/", cors(corsOption), function (req, res) {
-  res.sendFile("front/public/index.html");
-});
-
 const userList = {};
-const chat = io.of("/").on("connection", (socket) => {
+const chat = io.of("/chat").on("connection", (socket) => {
+  console.log("connected client");
   const roomUserList = {};
   socket.on("login", (data) => {
     console.log(

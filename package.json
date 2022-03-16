@@ -1,20 +1,30 @@
 {
   "name": "chat",
   "version": "1.0.0",
-  "description": "",
+  "description": "vue, nodejs socket.io로 재구성 중 (현재 코드는 한 파일에 집중되어 있기 때문에 실제 서비스와 같이 구성해보기 위함.)",
   "workspaces": [
-    "back",
-    "front"
+    "api",
+    "client",
+    "socket"
   ],
   "main": "",
   "scripts": {
-    "serve:api": "cd back && npm run start",
-    "serve:web": "cd front && npm run serve",
+    "serve:api": "cd api && npm run start",
+    "serve:web": "cd client && npm run serve",
+    "serve:socket": "cd socket && npm run start",
     "build": "cd front && npm run build",
     "lint": "cd front && npm run lint",
     "test": "jest"
   },
   "keywords": [],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redgpcmffld/realtime-chat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/redgpcmffld/realtime-chat/issues"
+  },
+  "homepage": "https://github.com/redgpcmffld/realtime-chat#readme"
 }

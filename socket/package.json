@@ -1,11 +1,12 @@
 {
-  "name": "back",
+  "name": "socket",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server"
+    "start": "nodemon server",
+    "test": "jest --detectOpenHandles --forceExit",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -14,8 +15,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.12",
-    "sanitize-html": "^2.4.0",
-    "socket.io": "^4.1.3"
+    "sanitize-html": "^2.7.0",
+    "socket.io": "^4.4.1"
   },
   "devDependencies": {
     "jest": "^27.0.6"
