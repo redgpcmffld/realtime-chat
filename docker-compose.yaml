@@ -1,0 +1,31 @@
+version: "3"
+services:
+  mysql:
+    image: mysql/mysql-server:8.0.28
+    restart: unless-stopped
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-file /init-local.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=chat_local
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - LANG=C.UTF-8
+    volumes:
+      - ./db/init-local.sql:/init-local.sql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: mysql --user=root --password=root chat_local -e 'select 1';
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  redis:
+    image: redis:6-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
