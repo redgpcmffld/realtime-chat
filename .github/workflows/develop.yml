@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: push notion Step
-        uses: lbj91/notion-sdk-ts@0.01
+        uses: lbj91/notion-sdk-ts@0.02
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
