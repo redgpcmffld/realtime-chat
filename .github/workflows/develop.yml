@@ -18,6 +18,6 @@ jobs:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           OWNER: redgpcmffld
-          REPOSITORY: coding_practice
-          PROJECT_NAME: practice
+          REPOSITORY: realtime-chat
+          PROJECT_NAME: chat
           TIMEZONE: "Asia/Seoul"
