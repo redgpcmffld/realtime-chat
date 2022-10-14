@@ -1,0 +1,21 @@
+on: [push]
+
+jobs:
+  noti-test:
+    runs-on: ubuntu-latest
+    name: notion github sync test
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: push notion Step
+        uses: lbj91/notion-sdk-ts@0.01
+        with:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          OWNER: redgpcmffld
+          REPOSITORY: realtime-chat
+          PROJECT_NAME: chat
+          TIMEZONE: "Asia/Seoul"
