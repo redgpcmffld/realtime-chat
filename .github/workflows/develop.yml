@@ -7,10 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     name: notion github sync test
     steps:
-      # To use this repository's private action,
-      # you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: push notion Step
         uses: lbj91/notion-sdk-ts@0.02
         with:
